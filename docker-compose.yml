@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+  api:
+    container_name: 'api'
+    build: './'
+    ports:
+      - '8080:8080'
+    volumes:
+      - './api:/go/src/app'
+    depends_on:
+      - 'database'
+#  web:
+#    container_name: 'web'
+#    image: 'nginx:latest'
+#    ports:
+#      - '8081:80'
+#    volumes:
+#      - './web:/usr/share/nginx/html'
+#    depends_on:
+#      - 'api'
+
+  database:
+    image: 'mongo:latest'
+    container_name: 'mongodb-locale'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=productListUser
+      - MONGO_INITDB_ROOT_PASSWORD=productListPassword
+      - MONGO_INITDB_DATABASE=productListDB
+      - MONGO_INITDB_ROOT_USER_PASSWORD=productListPassword
+    volumes:
+#      - './mongo:/data/db'
+#      - './mongo/init:/docker-entrypoint-initdb.d'
+#      - './mongo/init/init.js:/docker-entrypoint-initdb.d/init.js'
+#       './mongo/database/import.sh
+      - './mongo/database/import.sh:/docker-entrypoint-initdb.d/import.sh'
+      - './mongo-volume:/data/db'
+    ports:
+      - '27017-27019:27017-27019'
