@@ -23,7 +23,7 @@ jobs:
       run: |
         docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_ACCESS_TOKEN
         - name: Build the Docker image
-          run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_HUB_USERNAME}}/ghaction-api:$(date +%s)
+          run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_HUB_USERNAME}}/challenge:$(date +%s)
         
         - name: Docker Push
-          run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/ghaction-api
+          run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/cchallenge:latest
