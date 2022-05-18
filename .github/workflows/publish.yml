@@ -18,6 +18,6 @@ jobs:
 
     - name: Build the challenge Docker image
       run: |
-        docker build . --tag ghcr.io/DiegoAndresMC/cchallenge:latest
+        docker build . --tag ghcr.io/diego-andres-mc/cchallenge:latest
         docker run ghcr.io/diego-andres-mc/cchallenge:latest
         docker push ghcr.io/diego-andres-mc/cchallenge:latest
