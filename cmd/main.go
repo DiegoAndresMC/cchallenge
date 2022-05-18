@@ -1,8 +1,8 @@
 package main
 
 import (
-	"guolmal/internal/bd"
-	"guolmal/internal/handlers"
+	"cchallenge/internal/bd"
+	"cchallenge/internal/handlers"
 	"log"
 )
 
