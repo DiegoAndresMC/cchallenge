@@ -14,7 +14,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 vendor
-build
 coverfile_out
 coverfile_out.html
 .idea
+.DS_Store

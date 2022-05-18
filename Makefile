@@ -18,6 +18,8 @@ coverage:
 	@go tool cover -html=coverfile_out -o coverfile_out.html
 
 docker:
-	@docker build . -t customer-debt-assesment:latest -f iaas/Dockerfile
+	@docker build . -t customer-debt-assesment:latest -f Dockerfile
+
+	@#docker build . -t customer-debt-assesment:latest -f iaas/Dockerfile
 
 .PHONY: test build

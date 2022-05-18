@@ -8,7 +8,9 @@ import (
 )
 
 var MongoCN = ConnectDB()
-var clientOptions = options.Client().ApplyURI("mongodb://productListUser:productListPassword@localhost:27017/?authMechanism=SCRAM-SHA-1")
+
+//var clientOptions = options.Client().ApplyURI("mongodb://productListUser:productListPassword@localhost:27017/?authMechanism=SCRAM-SHA-1")
+var clientOptions = options.Client().ApplyURI("mongodb+srv://dbwalmart:1234567890@cluster0.6leke.mongodb.net/test?retryWrites=true&w=majority")
 
 func ConnectDB() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), clientOptions)
