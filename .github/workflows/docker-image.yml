@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+        username: ${{secrets.DOCKER_HUB_USERNAME}}
+        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+
 jobs:
 
   build:
@@ -15,9 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Login doker hub
-      env:
-        username: ${{secrets.DOCKER_HUB_USERNAME}}
-        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+      
       run: |
         docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_ACCESS_TOKEN
         - name: Build the Docker image
