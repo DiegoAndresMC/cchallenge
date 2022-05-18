@@ -1,0 +1,23 @@
+name: publish
+
+on: [push]
+
+jobs:
+  publish-challenge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.TOKEN }}
+
+    - name: Build the challenge Docker image
+      run: |
+        docker build . --tag ghcr.io/DiegoAndresMC/cchallenge:latest
+        docker run ghcr.io/DiegoAndresMC/cchallenge:latest
+        docker push ghcr.io/DiegoAndresMC/cchallenge:latest
