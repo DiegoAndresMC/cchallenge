@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 env:
-        username: ${{secrets.DOCKER_HUB_USERNAME}}
-        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+  username: ${{secrets.DOCKER_HUB_USERNAME}}
+  password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
 
 jobs:
 
@@ -23,7 +23,7 @@ jobs:
       run: |
         docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_ACCESS_TOKEN
         - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag diegoamc/ghaction-api:$(date +%s)
+          run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_HUB_USERNAME}}/ghaction-api:$(date +%s)
         
         - name: Docker Push
-          run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/ghaction-api:latest
+          run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/ghaction-api
