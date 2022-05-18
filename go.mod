@@ -1,4 +1,4 @@
-module guolmal
+module cchallenge
 
 go 1.18
 

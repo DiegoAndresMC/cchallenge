@@ -1,9 +1,9 @@
 package routers
 
 import (
+	"cchallenge/internal/bd"
+	"cchallenge/internal/models"
 	"encoding/json"
-	"guolmal/internal/bd"
-	"guolmal/internal/models"
 	"net/http"
 )
 

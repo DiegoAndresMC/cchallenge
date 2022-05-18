@@ -1,10 +1,10 @@
 package handlers
 
 import (
+	mdw "cchallenge/internal/middlewares"
+	"cchallenge/internal/routers"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	mdw "guolmal/internal/middlewares"
-	"guolmal/internal/routers"
 	"log"
 	"net/http"
 	"os"

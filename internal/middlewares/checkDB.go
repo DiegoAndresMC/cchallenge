@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"guolmal/internal/bd"
+	"cchallenge/internal/bd"
 	"net/http"
 )
 
