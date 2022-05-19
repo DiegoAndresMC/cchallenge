@@ -15,8 +15,8 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 	var s string
 
 	if len(sId) < 1 && len(sStr) < 3 {
-		encodeResponseAsJSON(w, models.Error{Message: "mistake committed in query params"}, http.StatusBadRequest)
-		return
+		kind = 3
+		s = ""
 	}
 	if len(sId) > 0 && len(sStr) < 3 {
 		kind = 1

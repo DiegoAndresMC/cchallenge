@@ -35,11 +35,14 @@ func ConcatStages(params ...bson.D) []bson.D {
 func SearchProductsByDescriptionBrand(search string, kind int) ([]*models.Product, error) {
 	// 2 for search by text
 	// 1 for search by id
-	var isPalindrome bool = false
+	var isPalindrome = false
 
 	if kind == 2 {
 		isPalindrome = CheckPalindrome(search)
 	}
+
+	fmt.Printf("isPalindrome: %v\n", isPalindrome)
+
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	var (
@@ -67,14 +70,16 @@ func SearchProductsByDescriptionBrand(search string, kind int) ([]*models.Produc
 		}
 
 		matchStage = bson.D{
-			// $or: []
 			{"$match", bson.D{
 				{"id", searchK},
 			}},
 		}
+	} else if kind == 3 {
+		matchStage = bson.D{
+			{"$match", bson.D{}},
+		}
 	} else if kind == 2 {
 		matchStage = bson.D{
-			// $or: []
 			{"$match", bson.D{
 				{"$or", []bson.D{
 					{
@@ -99,6 +104,7 @@ func SearchProductsByDescriptionBrand(search string, kind int) ([]*models.Produc
 	addFieldsStage := bson.D{
 		{Key: "$addFields", Value: bson.D{
 			{"isPalindrome", isPalindrome},
+			{"percentage", percent * 100},
 			{"calculatedPrice", bson.D{
 				{"$multiply", []interface{}{
 					"$price",
