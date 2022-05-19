@@ -11,7 +11,7 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 	// get params from the url
 	sStr := r.URL.Query().Get("s")
 	sId := r.URL.Query().Get("id")
-	var kind string
+	var kind int
 	var s string
 
 	if len(sId) < 1 && len(sStr) < 3 {
@@ -19,15 +19,15 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if len(sId) > 0 && len(sStr) < 3 {
-		kind = "id"
+		kind = 1
 		s = sId
 	}
 	if len(sId) < 1 && len(sStr) > 3 {
-		kind = "s"
+		kind = 2
 		s = sStr
 	}
 
-	if len(kind) == 0 {
+	if kind == 0 {
 		encodeResponseAsJSON(w, models.Error{Message: "mistake committed in query params"}, http.StatusBadRequest)
 		return
 	}
@@ -43,6 +43,9 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 func encodeResponseAsJSON(w http.ResponseWriter, res interface{}, status int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(res)
+	err := json.NewEncoder(w).Encode(res)
+	if err != nil {
+		return
+	}
 
 }

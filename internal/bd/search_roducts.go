@@ -32,8 +32,9 @@ func ConcatStages(params ...bson.D) []bson.D {
 	return concatenated
 }
 
-func SearchProductsByDescriptionBrand(search, kind string) ([]*models.Product, error) {
-	// if kind is not "s" or "id"
+func SearchProductsByDescriptionBrand(search string, kind int) ([]*models.Product, error) {
+	// 2 for search by text
+	// 1 for search by id
 
 	isPalindrome := CheckPalindrome(search)
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
@@ -50,10 +51,12 @@ func SearchProductsByDescriptionBrand(search, kind string) ([]*models.Product, e
 		percent = 1.0
 	}
 
+	fmt.Printf("Finding products with search text: %s, %T. with kind %s\n", searchText, searchText, kind)
+
 	db := MongoCN.Database("promotions")
 	col := db.Collection("products")
 
-	if kind == "k" {
+	if kind == 1 {
 		// id in database is an integer, not string like search
 		searchK, err := strconv.Atoi(search)
 		if err != nil {
@@ -66,7 +69,7 @@ func SearchProductsByDescriptionBrand(search, kind string) ([]*models.Product, e
 				{"id", searchK},
 			}},
 		}
-	} else {
+	} else if kind == 2 {
 		matchStage = bson.D{
 			// $or: []
 			{"$match", bson.D{
@@ -86,6 +89,8 @@ func SearchProductsByDescriptionBrand(search, kind string) ([]*models.Product, e
 				}},
 			}},
 		}
+	} else {
+		return products, fmt.Errorf("kind must be 1 or 2")
 	}
 
 	addFieldsStage := bson.D{
@@ -99,6 +104,8 @@ func SearchProductsByDescriptionBrand(search, kind string) ([]*models.Product, e
 			}},
 		},
 		}}
+
+	fmt.Printf("matchStage: %v\n", matchStage)
 
 	cursor, err := col.Aggregate(ctx, mongo.Pipeline(ConcatStages(matchStage, addFieldsStage)))
 	if err != nil {
