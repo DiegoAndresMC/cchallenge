@@ -35,8 +35,11 @@ func ConcatStages(params ...bson.D) []bson.D {
 func SearchProductsByDescriptionBrand(search string, kind int) ([]*models.Product, error) {
 	// 2 for search by text
 	// 1 for search by id
+	var isPalindrome bool = false
 
-	isPalindrome := CheckPalindrome(search)
+	if kind == 2 {
+		isPalindrome = CheckPalindrome(search)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	var (
